@@ -27,7 +27,7 @@ contract Campaign {
     uint public minimumContribution;
     mapping(address => bool) public approvers;
     Request[] public requests;
-    uint approversCount;
+    uint public approversCount;
 
     modifier restricted() {
         require(msg.sender == manager, "Method restricted to owner.");
