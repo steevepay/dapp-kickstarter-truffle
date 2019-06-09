@@ -2,3 +2,5 @@
 .secret
 build
 node_modules
+.next
+.vscode
