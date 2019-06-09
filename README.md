@@ -31,6 +31,7 @@ $ truffle migrate --network=rinkeby
 ```
 Finallyse your '.env' file by adding your deployed contract address:
 ```
+// or you can use the following deployed contract: 0x8574BcbB0a0a2dF8172aBeF30e22CD033a8CCfDA
 FACTORY_CONTRACT_ADDRESS="0x8..."
 ```
 Congratulation, your decentralized kickstartup is running on http://localhost:3000 🎉
