@@ -27,7 +27,6 @@ class CampaignNew extends Component {
       this.setState({ errorMessage: err.message });
       err = true;
     }
-    console.log(accounts[0]);
 
     if (err === false) {
       this.setState({loading: true, errorMessage: ''});
@@ -37,16 +36,13 @@ class CampaignNew extends Component {
             .send({
               from: accounts[0]
             }).on('receipt', (receipt) => {
-              console.log(receipt);
+              // console.log(receipt);
               Router.pushRoute('/');   
             })
         
       } catch (err) {
         this.setState({ errorMessage: err.message })
       }
-
-      console.log('request done');
-      console.log('change route');
         
       this.setState({loading: false});
     }
