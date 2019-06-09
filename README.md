@@ -27,7 +27,7 @@ Then compile the contracts:
 $ truffle compile
 ```
 Then deploy you contract on the ethereum test network of your choice (configs on the 'truffle-config.js'):
-```sheel
+```shell
 $ truffle migrate --network=rinkeby
 ```
 Finallyse your '.env' file by adding your deployed contract address:
