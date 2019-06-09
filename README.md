@@ -3,7 +3,7 @@
 ## Setup
 
 
-at the root directory, you have to create a '.env' file  with your Ethereum INFURA API url:
+at the root directory, you have to create a '.env' file  with your Ethereum [INFURA API](https://infura.io/) url:
 ```
 INFURA_URL="https://rinkeby.infura.io/v3/..."
 ```
