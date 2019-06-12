@@ -9,13 +9,13 @@ contract("Campaigns", (accounts) => {
     // .deployed() = new singleton, It will look if there is already an instance of the contract deployed to the blockchain via deployer.deploy.
     // .at() = You can create a new abstraction to represent the contract at that address.
     const factory = await CampaignFactory.new();
-    await factory.createCampaign(1, {
+    await factory.createCampaign(web3.utils.toWei("0.0001", "ether"), {
       from: accounts[0]
     });
     campagnAddress = (await factory.getDeployedCampaigns())[0];
   })
 
-  it('deploys a factory and a campaign', async ()=> {
+  it('deploys a factory and a campaign', async () => {
     const factory = await CampaignFactory.deployed();
     const campaign = await Campaign.at(campagnAddress);
     assert.ok(factory.address);
@@ -32,23 +32,38 @@ contract("Campaigns", (accounts) => {
     const campaign = await Campaign.at(campagnAddress);
     await campaign.contribute({
       from: accounts[1],
-      value: 200
+      value: web3.utils.toWei("0.0002", "ether")
     })
 
     const isContributor = await campaign.approvers(accounts[1]);
     assert(isContributor);
   });
 
+  it('required a minimum contribution', async () => {
+    const campaign = await Campaign.at(campagnAddress);
+    try {
+      await campaign.contribute({
+        from: accounts[1],
+        value: web3.utils.toWei("0", "ether")
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
+
   it('allows a manager to make a payment request', async () => {
     const campaign = await Campaign.at(campagnAddress);
-    await  campaign.createRequest('Buy Batteries', '200', accounts[1], {
+    await campaign.createRequest('Buy Batteries', '200', accounts[1], {
       from: accounts[0]
     });
     const request = await campaign.requests(0);
     assert.equal('Buy Batteries', request.description);
   });
 
-  it ('processes requests', async () => {
+
+
+  it('processes requests', async () => {
     const campaign = await Campaign.at(campagnAddress);
     await campaign.contribute({
       from: accounts[0],
@@ -59,8 +74,8 @@ contract("Campaigns", (accounts) => {
       gas: '1000000'
     });
     await campaign.approveRequest(0, {
-      from:accounts[0],
-      gas:'1000000'
+      from: accounts[0],
+      gas: '1000000'
     });
     await campaign.finalizeRequest(0, {
       from: accounts[0],
@@ -69,18 +84,5 @@ contract("Campaigns", (accounts) => {
     let balance = await web3.eth.getBalance(accounts[1]);
     balance = parseFloat(web3.utils.fromWei(balance, "ether"));
     assert(balance > 104);
-  });
-
-  it('required a minimum contribution', async () => {
-    const campaign = await Campaign.at(campagnAddress);
-    try {
-      await campaign.contribute().call({
-        from: accounts[1],
-        value: 5
-      })
-      assert(false);
-    } catch(err) {
-      assert(err);
-    }
   });
 });
