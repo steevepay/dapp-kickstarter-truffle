@@ -5,7 +5,9 @@
 at the root directory, you have to create a '.env' file with your Ethereum [INFURA API](https://infura.io/) url:
 
 ```js
-INFURA_URL = "https://rinkeby.infura.io/v3/...";
+PORT=3012
+HOST=localhost:3012
+INFURA_URL = "https://rinkeby.infura.io/v3/..."
 // You can also use this link: https://rinkeby.infura.io/v3/aa7a461490244b65a54e2f67b959fa8a
 ```
 

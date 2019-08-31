@@ -1,0 +1,21 @@
+version: "3.7"
+
+services:
+  dapp-kickstarter:
+    build: .
+    container_name: ${HOST}
+    restart: always
+    ports:
+      - "${PORT}:${PORT}"
+    command: "npm run start"
+    environment:
+      - VIRTUAL_HOST=${HOST}
+      - LETSENCRYPT_HOST=${HOST}
+      - LETSENCRYPT_EMAIL=${LETSENCRYPT_EMAIL}
+    networks:
+      - default
+
+networks:
+  default:
+    external:
+      name: webproxy
